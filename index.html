@@ -234,7 +234,7 @@ ol.steps{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
 <script>
 (function(){
 "use strict";
-const LS = "neutral-dive-coach-v1";
+const LS = "neutral-share-v1";
 
 /* ---------- reference data ---------- */
 const SUITS = {skin:"Skin / rash guard", shorty3:"3 mm shorty", js3:"3 mm long-sleeve shorty (Neosport)", fj3:"3 mm farmer john (Neosport)", fj3sh:"Neosport farmer john + long-sleeve shorty", full3:"3 mm full", full5:"5 mm full", full7:"7 mm full", semidry:"7 mm semi-dry", dry:"Drysuit"};
@@ -404,29 +404,38 @@ const TRIP = [
     "Check tank pod working pressure matches today's cylinder",
     "Water and food before the boat, not after",
     "Check the flying-after-diving card before booking the flight home",
-    "Skin check morning and evening; fresh-water rinse, dry and moisturize after the last dive",
+    "Fresh-water rinse and dry after the last dive; cover any cut or blister before the next one",
     "Stop rule: spreading redness, warmth, swelling, red streaks or fever means no more diving and call the doctor"
+  ]],
+  ["Galápagos", [
+    "Dive insurance covers air evacuation from the islands to the mainland. Policy number in SOS > My details",
+    "Nitrox card packed. Some boats require it, or charge for a private guide without it",
+    "Large SMB with a 30 m line or longer, and practice deploying it from depth before the trip",
+    "Reef hook and gloves for holding position in current, where the guides allow it",
+    "Personal locator or marine GPS radio, if the boat doesn't issue one",
+    "Cool season (June to November): 7 mm with hood, boots and gloves. Water can be in the 60s °F, and thermoclines drop several degrees in seconds. Warm season (December to May) is milder",
+    "Seas at Wolf and Darwin can be rough, especially in the cool season: seasickness remedy that doesn't make you drowsy, tested at home first",
+    "A few weeks before the trip: recheck the SOS numbers and the boat's rules, and get the chamber number from the operator",
+    "New suit and hood: redo the weight check on the first dive",
+    "Panga entries: back-roll and descend straight away with the group. Don't wait at the surface in current",
+    "At the briefing: chamber number, the boat's satellite phone, and the evacuation plan. Add them to SOS",
+    "Wolf and Darwin are an overnight sail from help. Dive conservatively there: no deco, slow ascents, full safety stops",
+    "Flying home: Quito sits at about 2,850 m. Count it as altitude when you plan your last dive day"
   ]]
 ];
 const DEFAULT_CONTACTS = [
-  {id:"k1", who:"Thailand ambulance (EMS)", num:"1669", sub:"National emergency medical line"},
-  {id:"k2", who:"DAN emergency, within Thailand", num:"1-800-01-8092", sub:"Diving medical emergencies, 24 h. Source: DAN contact page, Sept 2026"},
-  {id:"k3", who:"DAN global emergency", num:"+1-919-684-9111", sub:"Works from anywhere, 24 h. Calls from abroad may cost"},
-  {id:"k4", who:"Bangkok Hospital Pattaya, hyperbaric", num:"+66 38 259 986", sub:"Treats DCS and AGE. Closest to Rayong. Confirm hours before a trip"},
-  {id:"k5", who:"SSS chamber, Koh Tao", num:"+66 81 081 9777", sub:"24 h emergency"},
-  {id:"k6", who:"SSS chamber, Phuket", num:"+66 81 081 9000", sub:"24 h emergency"},
-  {id:"k7", who:"Dive operator / boat", num:"", sub:"Add before each trip"}
+  {id:"k1", who:"Emergency (EMS, police, fire)", num:"911", sub:"Call first for any life-threatening emergency"},
+  {id:"k2", who:"DAN emergency hotline", num:"+1-919-684-9111", sub:"Diving medical emergencies, 24 h, worldwide. Based in Durham, NC"},
+  {id:"k3", who:"Duke Hyperbaric Center, Durham", num:"919-684-8111", sub:"24 h. Ask for the hyperbaric physician on call. Call 911 first if life-threatening"},
+  {id:"k4", who:"US Coast Guard, offshore", num:"", sub:"VHF channel 16 from the boat"},
+  {id:"k5", who:"Dive operator / boat", num:"", sub:"Add before each trip"}
 ];
 const PH_CONTACTS = [
-  {id:"p1", who:"Philippines emergency (police, fire, ambulance)", num:"911", sub:"National hotline, from any phone"},
-  {id:"p2", who:"Philippine Coast Guard", num:"+63 2 8527 8482", sub:"Sea rescue and evacuation. Also +63 2 8527 3877. Text +63 917 724 3682"},
-  {id:"p3", who:"DAN global emergency", num:"+1-919-684-9111", sub:"24 h. DAN lists no Philippines line, so use this one. Collect calls accepted"},
-  {id:"p4", who:"Philippine Red Cross", num:"143", sub:"Ambulance and disaster response"},
-  {id:"p5", who:"Chamber, Manila: Lung Center (PCSSD)", num:"+63 915 827 0768", sub:"Quezon City. Landline +63 2 8924 6101, ask for local 1952"},
-  {id:"p6", who:"Chamber, Batangas: St. Patrick's Hospital", num:"+63 917 815 2010", sub:"Batangas City, nearest to Anilao. Landline +63 43 723 7089"},
-  {id:"p7", who:"Chamber, Cebu: TIEZA building (PCSSD)", num:"+63 928 242 6237", sub:"Mandaue City, serves the Visayas. Alternate listed +63 932 434 9532"},
-  {id:"p8", who:"Chamber, Coron: Sea Dive Resort", num:"+63 920 458 1360", sub:"Coron, Palawan"},
-  {id:"p9", who:"Liveaboard operator / boat", num:"", sub:"Add before the trip, with their emergency plan and nearest chamber"}
+  {id:"p1", who:"Ecuador emergency, ECU 911", num:"911", sub:"Police, fire, ambulance. Some operators speak English. The ECU 911 app can call you back with your GPS location"},
+  {id:"p2", who:"DAN emergency hotline", num:"+1-919-684-9111", sub:"24 h. Call early: DAN can coordinate evacuation from the islands"},
+  {id:"p3", who:"Protesub hyperbaric chamber, Puerto Ayora", num:"", sub:"Santa Cruz Island, 24 h. Get the current number from the liveaboard before the first dive"},
+  {id:"p4", who:"Ecuadorian Navy chamber, Guayaquil", num:"", sub:"San Eduardo Naval Base, mainland. Second option; ask DAN or the operator"},
+  {id:"p5", who:"Liveaboard / dive operator", num:"", sub:"Add the boat's satellite phone and the office number"}
 ];
 function emRegion(){ return S.emergency.region==="ph"? "ph" : "th"; }
 function emList(){ if(!Array.isArray(S.emergency.ph)) S.emergency.ph = PH_CONTACTS.map(c=>({...c})); return emRegion()==="ph"? S.emergency.ph : S.emergency.contacts; }
@@ -466,44 +475,19 @@ const SIGNALS = [
 ];
 const SIG_BY = Object.fromEntries(SIGNALS.map(x=>[x[0],x]));
 const DEFAULT_SIGFAV = ["ok","up","problem","low","ooa","pressure","half"];
-const SEED_LEARNINGS = [
-  {id:"l-bottomref", date:"2026-10-05", kind:"learning", title:"The bottom moves more than I do",
-   text:"Part of my buoyancy concern was hugging the bottom. As the bottom contour changed I felt I had to keep adjusting my breathing. Watching the computer depth showed I was holding fairly steady: when I thought I was rising, the bottom was often dropping away.",
-   cue:"Hold depth on the computer, not the bottom. Give the bottom room and let it move.", sv:1},
-  {id:"l-control1", date:"2026-10-05", kind:"progress", title:"Buoyancy control is solid",
-   text:"Very good buoyancy control on this dive. Rolled over and changed positions easily without losing depth.", cue:"", sv:1},
-  {id:"l-bcdrule", date:"2026-10-05", kind:"learning", title:"Lungs fine-tune, the BCD shifts the mean",
-   text:"Set-and-forget only holds at one depth. Following terrain changes depth, so small BCD adjustments are correct. The trigger is having to hold a breath or force an exhale to stay level, or a depth change of more than 2 to 3 m that will last. Too much is adjusting at a constant depth, or add then dump within a minute or two. Shallow water needs more frequent small corrections.",
-   cue:"One small puff or dump, then wait 3 to 4 breaths before judging.", sv:2},
-  {id:"l-shallowrmv", date:"2026-10-05", kind:"progress", title:"Best air use: holding one depth",
-   text:"Best RMV yet on a shallow dive once I held a single depth instead of following the bottom. One dive, and I was in a slow buddy-watching role, so confirm it over more dives. For life near the terrain: set a working depth just above the tallest features and make close looks a deliberate down-and-back.", cue:"", sv:2},
-  {id:"l-cramps", date:"2026-10-05", kind:"learning", title:"Cramps come from muscles held short",
-   text:"Foot and calf cramps from holding pointed toes; the newer hamstring cramp from bent-knee trim held all dive plus more flutter kicking than usual. Point on the flutter stroke, relax the ankle between kicks. Neutral ankles keep the fins flat in frog trim. Good trim should be passive: if the legs work to stay up, the weight is too far toward the feet. Release a cramp by pulling the fin tip toward the shin.",
-   cue:"Slack-leg test in a hover: do the legs sink? Relax ankles between kicks.", sv:2},
-  {id:"l-mask", date:"2026-10-05", kind:"learning", title:"Mask leak at the mouth crease",
-   text:"Leak where the fold runs between mouth and cheek. Likely causes: the reg pulling the mouth corner, smiling or reacting through the reg, or a strap tight enough to deform the skirt. Silicone on the upper lip helps. Venting on exhale means nose-exhaling: breathe out through the mouth. Fit test with the reg in: mask on without the strap, gentle inhale through the nose, it should stay.",
-   cue:"Strap high on the crown, snug not tight. Exhale through the mouth.", sv:2},
-  {id:"l-heel", date:"2026-10-05", kind:"learning", title:"Left heel hot spot from the bootie seam",
-   text:"Blister forming just right of center on the left heel, worst in frog kick. Likely the bootie seam under the fin strap. Try moving the strap slightly higher, wear thin dive socks (recheck fit), and tape or patch the spot on dry skin before suiting up.",
-   cue:"Tape the left heel and check strap position before frog kicking.", sv:2},
-  {id:"l-skin", date:"2026-10-05", kind:"learning", title:"Cuts and blisters: cover, rinse, watch",
-   text:"Warm seawater carries bacteria that infect broken skin. Cover any cut or blister with a waterproof dressing before diving, or sit the dive out if it is open. After the dive: fresh water, soap, dry, antiseptic, clean dressing. Spreading redness, warmth, swelling, red streaks or fever means same-day medical care.",
-   cue:"Any open cut or blister? Cover it or sit out.", sv:2}
-];
+const SEED_LEARNINGS = [];
 const SEED_V = 2;
 const DEFAULT_CUES = ["Breathe from the diaphragm","Tuck your butt, knees bent","Defog your mask","Tank valve fully open","Computer set to the right gas"];
 
 /* ---------- state ---------- */
 let memOnly = false;
-function defaultWbase(){ return {suit:"shorty3", tank:"al80", water:"salt", bcd:"back", boots:"", pockets:3.2, trim:4/2.20462, date:"2026-11-12", note:"Boat blocks about 0.8 kg: 2 per weight pocket (3.2 kg / 7 lb) plus 2 x 2 lb trim. Near perfect, if anything slightly light"}; }
-function blank(){ return {wbase:defaultWbase(), v:1, units:"metric", profile:{heightCm:null, weightKg:null}, cues:DEFAULT_CUES.slice(), dives:[], draft:null, example:false, sigFav:DEFAULT_SIGFAV.slice(), sigLink:"", skills:{queue:[], log:[], custom:[]}, emergency:{contacts: DEFAULT_CONTACTS.map(c=>Object.assign({}, c)), me:{name:"", blood:"", allergies:"", meds:"", cert:"", kin:"", kinPhone:"", insurer:"", policy:"", doctor:"", notes:""}}, backup:{at:null, dives:0}, trip:{name:"", items:{}}, learnings:SEED_LEARNINGS.map(x=>Object.assign({},x)), seedL:SEED_V, certs:defaultCerts(), medical:{signed:"", physician:false, physDate:""}, incident:{active:null, past:[]}, hiddenGuides:[], myGuides:[], gear:GEAR_SEED.map(x=>Object.assign({},x)), gearSeed:1}; }
+function defaultWbase(){ return {suit:"full3", tank:"al80", water:"salt", bcd:"jacket", boots:"", pockets:0, trim:0, date:"", note:""}; }
+function blank(){ return {wbase:defaultWbase(), v:1, units:"metric", profile:{heightCm:null, weightKg:null}, cues:DEFAULT_CUES.slice(), dives:[], draft:null, example:false, sigFav:DEFAULT_SIGFAV.slice(), sigLink:"", skills:{queue:[], log:[], custom:[]}, emergency:{contacts: DEFAULT_CONTACTS.map(c=>Object.assign({}, c)), me:{name:"", blood:"", allergies:"", meds:"", cert:"", kin:"", kinPhone:"", insurer:"", policy:"", doctor:"", notes:""}}, backup:{at:null, dives:0}, trip:{name:"", items:{}}, learnings:SEED_LEARNINGS.map(x=>Object.assign({},x)), seedL:SEED_V, certs:defaultCerts(), medical:{signed:"", physician:false, physDate:""}, incident:{active:null, past:[]}, hiddenGuides:[], myGuides:[], gear:[]}; }
 function migrate(o){
   if(o.wbase===undefined) o.wbase = defaultWbase();
-  if(o.wbase && Math.abs((o.wbase.pockets||0) - 3.5/2.20462) < 0.01) o.wbase.pockets = 7/2.20462;
   if(!Array.isArray(o.sigFav)) o.sigFav = DEFAULT_SIGFAV.slice();
   if(typeof o.sigLink!=="string") o.sigLink = "";
   if(!o.profile) o.profile = {heightCm:null, weightKg:null};
-  if(o.profile && o.profile.weightKg==null && !o.bwSeed){ o.profile.weightKg = 176/2.20462; o.bwSeed = 1; }
   if(!o.skills || !Array.isArray(o.skills.log)) o.skills = {queue:[], log:[], custom:[]};
   if(o.draft && !o.draft.gas) o.draft.gas = ((o.draft.fo2Label||0)>21 || (o.draft.fo2||0)>21) ? "nitrox" : "air";
   if(o.draft && !o.draft.skillRes) o.draft.skillRes = {};
@@ -516,30 +500,17 @@ function migrate(o){
   if(!o.emergency.me) o.emergency.me = {name:"", blood:"", allergies:"", meds:"", cert:"", kin:"", kinPhone:"", insurer:"", policy:"", doctor:"", notes:""};
   if(!o.certs) o.certs = defaultCerts();
   if(o.certs.certV===2 || o.certs.certV===3){ (o.certs.list||[]).forEach(x=>{ const sd = CERT_SEED.find(y=>y.id===x.id); if(sd){ if(!x.date) x.date = sd.date; if(!x.no) x.no = sd.no; if(!x.note && sd.note) x.note = sd.note; } }); o.certs.certV = 4; }
-  if(o.certs.certV!==4){ o.certs.list = CERT_SEED.map(x=>Object.assign({},x)); o.certs.msd = Object.assign({},MSD_SEED); o.certs.rescue = true; o.certs.applied = true; o.certs.certV = 4; }
-  if(o.emergency && o.emergency.me && (!o.emergency.me.cert || /advanced|aow/i.test(o.emergency.me.cert))) o.emergency.me.cert = "PADI Master Scuba Diver (Rescue Diver, EFR)";
-  if(!o.medical) o.medical = {signed:"2026-09-28", physician:false, physDate:""};
+  if(o.certs.certV!==4){ o.certs.list = CERT_SEED.map(x=>Object.assign({},x)); o.certs.msd = Object.assign({},MSD_SEED); o.certs.certV = 4; }
+  if(!o.medical) o.medical = {signed:"", physician:false, physDate:""};
   if(!o.incident) o.incident = {active:null, past:[]};
   if(!Array.isArray(o.hiddenGuides)) o.hiddenGuides = [];
   if(!Array.isArray(o.myGuides)) o.myGuides = [];
   if(!Array.isArray(o.gear)) o.gear = [];
-  if(!o.gearSeed){ if(!o.gear.length) o.gear = GEAR_SEED.map(x=>Object.assign({},x)); o.gearSeed = 1; }
   return o;
 }
 function defaultCerts(){ return {list:CERT_SEED.map(x=>Object.assign({},x)), certV:4, msd:Object.assign({},MSD_SEED), aow:true, specs:["Enriched Air Nitrox","Peak Performance Buoyancy","Deep","Wreck","Search and Recovery"], prior:100, efr:null, rescue:false, applied:false, plan:"EFR, Rescue and the application with my instructor after the liveaboard, December 2026"}; }
-const CERT_SEED = [
-  {id:"c1", name:"Master Scuba Diver", date:"2026-10-18", no:"2610AL7955"},
-  {id:"c2", name:"Rescue Diver", date:"2026-10-18", no:"2610A9TBHK"},
-  {id:"c3", name:"EFR Primary and Secondary Care (CPR, first aid, AED)", date:"2026-10-17", no:"2610A4FDHK", efr:true, note:"Adult CPR, AED and first aid. Refresh every two years"},
-  {id:"c4", name:"Search and Recovery", date:"2026-10-03", no:"2610ADBKGH"},
-  {id:"c5", name:"Wreck", date:"2026-10-03", no:"2610AOVVOH"},
-  {id:"c6", name:"Enriched Air Diver", date:"2026-09-21", no:"2609AJBAPD", note:"Nitrox up to 40% O2"},
-  {id:"c7", name:"Deep", date:"2026-09-15", no:"2609A6F81C"},
-  {id:"c8", name:"Peak Performance Buoyancy", date:"2026-09-21", no:"2609AB2V1D"},
-  {id:"c9", name:"Advanced Open Water", date:"2024-01-31", no:"24010J4546", note:"Scuba Shack, Brentwood, Tennessee. Instructor Dan McIntyre Jr"},
-  {id:"c10", name:"Open Water", date:"2021-07-13", no:"21070J8605", note:"Sandals Dive Center, St. Lucia. Instructor Adolphus A Henry"}
-];
-const MSD_SEED = {instructor:"Mats Yngve (PADI 429916)", shop:"No Limit Divers, Bang Lamung, Chonburi", phone:"+66 86 084 0651"};
+const CERT_SEED = [];
+const MSD_SEED = {};
 const SYMPTOMS = ["Unusual fatigue","Itchy skin","Skin rash or marbling","Joint pain","Numbness or tingling","Weakness","Dizziness","Headache","Trouble breathing","Severe cough","Chest pain","Confusion","Speech or vision trouble","Bloody froth","Convulsions","Unconscious"];
 const AIDS = ["Oxygen started","Lying flat","Recovery position","CPR started","AED applied","Fluids by mouth","EMS called","DAN called","Evacuation started","Handed to EMS"];
 function blankIncident(){ return {id:uid(), start:Date.now(), name:"", age:"", contact:"", phone:"", history:"", notes:"", log:[], dives:[{},{},{}]}; }
@@ -790,7 +761,7 @@ async function runAI(kind){
 }
 
 /* ---------- rendering ---------- */
-const COPYRIGHT = "© 2026 Paul Banks. All rights reserved. Personal use only. Do not copy, modify or redistribute.";
+const COPYRIGHT = "© 2026 Paul Banks. Shared free for personal, non-commercial use. Please don't sell, modify or republish it.";
 const DISCLAIMER = `<p><b>Neutral is a personal reference and learning aid, made for interest and fun.</b> It is not professional advice, not a certified dive planner, and may contain errors or out-of-date information.</p>
 <p>Do not rely on it for dive planning, weighting, gas, decompression, equipment setup or medical decisions. Always follow your training, your dive computer, the maker's manuals, the dive operator's briefing and qualified medical professionals.</p>
 <p>In an emergency, call local emergency services first. You use this app at your own risk; the author accepts no responsibility for how it is used.</p>`;
@@ -1032,9 +1003,9 @@ function viewEmergency(){
   return `<div class="section spread"><h1 style="color:var(--bad)">Emergency</h1></div>
   <div class="section"><button type="button" class="btn" style="background:var(--bad);color:#fff;font-size:18px;padding:16px" data-act="wfStart">${WF? "Resume emergency workflow" : "Start emergency workflow"}</button>
     <p class="small muted" style="margin-top:6px">Step by step from scene safety to handover. Opens an accident record and logs each step with the time. A memory aid only: it does not replace training. Call local emergency services first.</p></div>
-  <div class="section"><div class="spread"><h3>Call</h3><div class="seg" style="flex:none" role="group" aria-label="Country"><button type="button" class="${R==="th"?"on":""}" data-act="emRegion" data-v="th">Thailand</button><button type="button" class="${R==="ph"?"on":""}" data-act="emRegion" data-v="ph">Philippines</button></div></div>
+  <div class="section"><div class="spread"><h3>Call</h3><div style="min-width:190px" class="seg" style="flex:none" role="group" aria-label="Country"><button type="button" class="${R==="th"?"on":""}" data-act="emRegion" data-v="th">USA</button><button type="button" class="${R==="ph"?"on":""}" data-act="emRegion" data-v="ph">Ecuador</button></div></div>
     <div class="panel">${contacts}</div>
-    ${R==="ph"? `<p class="small muted">Chamber numbers come from Philippine dive community lists dated 2023 to 2024. Confirm the nearest working chamber with the liveaboard before departure.</p>` : ""}
+    ${R==="ph"? `<p class="small muted">Galápagos medical care is limited and evacuation to the mainland is by air. Wolf and Darwin are an overnight sail from Santa Cruz, so help can be many hours away. Get the chamber and boat numbers at the first briefing. Galápagos checklist: Gear tab, Trip prep. Numbers checked November 2026.</p>` : ""}
     <div class="row">${EM.edit? `<button type="button" class="btn slim" data-act="ctSave">Save contacts</button><button type="button" class="btn slim ghost" data-act="ctAdd">Add contact</button>` : `<button type="button" class="btn slim ghost" data-act="ctEdit">Edit contacts</button>`}</div>
     <p class="small muted">Tap a number to call. Check the numbers before each trip.</p></div>
   <div class="section"><div class="spread"><h3>My details</h3><button type="button" class="btn slim ghost" data-act="meEdit">${EM.meEdit?"Done":"Edit"}</button></div>
@@ -1407,7 +1378,7 @@ function pickBase(){
   return real.find(x=>x.check==="eye") || wbaseDive() || all.find(x=>x.check==="eye") || all[0] || null;
 }
 let WC = null;
-function wcInit(){ const l = sorted().find(x=>!x.example); WC = {suit:"fj3sh", tank:(l&&l.tank)||(S.wbase&&S.wbase.tank)||"al80", water:"salt", bcd:(l&&l.bcd)||(S.wbase&&S.wbase.bcd)||"back", boots:"b65"}; }
+function wcInit(){ const l = sorted().find(x=>!x.example); WC = {suit:"full3", tank:(l&&l.tank)||(S.wbase&&S.wbase.tank)||"al80", water:"salt", bcd:(l&&l.bcd)||(S.wbase&&S.wbase.bcd)||"jacket", boots:""}; }
 function wcSel(field, map, cur, attr){ return `<select ${attr}="${field}">${Object.entries(map).map(([k,v])=>`<option value="${k}" ${k===(cur||"")?"selected":""}>${esc(typeof v==="string"?v:v.n)}</option>`).join("")}</select>`; }
 function wtTable(){
   const bw = S.profile.weightKg;
@@ -1425,7 +1396,7 @@ function wtTable(){
   const tips = `<div class="panel guide" style="margin-top:10px"><h4>Easy to forget</h4><ul>
     <li><b>Tank:</b> an aluminum tank gets about 2 kg (4 to 5 lb) lighter as you breathe it down. That is why the check is at 5 m with about 50 bar left, not at the start.</li>
     <li><b>Steel tank or a metal backplate</b> on a boat rig: about 2 kg (4 to 5 lb) less lead each. Pick them above.</li>
-    <li><b>Rental BCD:</b> a jacket BCD with its own foam floats differently from your Hydros. Treat it as a new setup and do the 5 m check.</li>
+    <li><b>Rental BCD:</b> a jacket BCD with its own foam floats differently from your own BCD. Treat it as a new setup and do the 5 m check.</li>
     <li><b>Ditchable lead:</b> keep most of it in the release pockets. Trim pockets are not ditchable, so do not let them carry more than a few pounds.</li>
     <li><b>New neoprene</b> floats most. Expect to drop some lead over the first several dives.</li>
     <li><b>Boots and fins</b> change trim more than total weight. Do the slack-leg test after any change.</li>
@@ -2044,8 +2015,7 @@ const GUIDES = [
   {id:"s620", name:"Scubapro S620 Ti", blurb:"Second stage: knob and VIVA lever", secs:S620, url:S620_URL, urlText:"Open Scubapro's product page"},
   {id:"hydros", name:"Scubapro Hydros Pro", blurb:"Back-inflate BCD: fit, weights, trim", secs:HYD, url:HYD_URL, urlText:"Open Scubapro's product page"},
   {id:"mk25", name:"Scubapro MK25 EVO", blurb:"First stage: ports, cold water, service", secs:MK25, url:MK25_URL, urlText:"Open Scubapro's product page"},
-  {id:"peregrine", name:"Shearwater Peregrine", blurb:"Backup dive computer: setup, menus, matching the Mk2i", secs:PER, url:PER_URL, urlText:"Open Shearwater's Peregrine manual (PDF)"},
-  {id:"kit", name:"Suit, boots and fins", blurb:"Neosport two-piece, Pelagic boots, Seawing Supernova", secs:KIT, url:KIT_URL, urlText:"Open Scubapro's Supernova page"}
+  {id:"peregrine", name:"Shearwater Peregrine", blurb:"Dive computer: setup, menus, use as a backup", secs:PER, url:PER_URL, urlText:"Open Shearwater's Peregrine manual (PDF)"}
 ];
 let MKS = {guide:null, sec:null};
 let GLE = false, GED = null;
@@ -2114,18 +2084,9 @@ function viewTrip(){
       const k = grp+"|"+i;
       return `<label class="cue"><input type="checkbox" data-trip="${esc(k)}" ${S.trip.items[k]?"checked":""}><span>${esc(t)}</span></label>`;
     }).join("")}</div></div>`).join("")}
-  <div class="section"><p class="small muted">The SOS page has emergency numbers for Thailand and the Philippines: pick the country at the top of the Call list. For any other country, add its numbers there before your first dive.</p>
+  <div class="section"><p class="small muted">The SOS page has emergency numbers for the USA and Ecuador (Galápagos): pick one at the top of the Call list. For any other country, add its numbers there before your first dive.</p>
   <button type="button" class="btn ghost" data-act="sos">Open SOS contacts</button></div>`;
 }
-const GEAR_SEED = [
-  {id:"g1", type:"Dive computer", name:"Garmin Descent Mk2i", serial:"", bought:"", service:"", every:"", notes:"Primary. T1 pod takes a CR123A"},
-  {id:"g2", type:"Dive computer", name:"Shearwater Peregrine", serial:"", bought:"", service:"", every:"", notes:"Backup"},
-  {id:"g3", type:"Regulator", name:"Scubapro MK25 EVO / S620 Ti", serial:"", bought:"", service:"", every:"12", notes:""},
-  {id:"g4", type:"BCD", name:"Scubapro Hydros Pro", serial:"", bought:"", service:"", every:"12", notes:""},
-  {id:"g5", type:"Wetsuit", name:"Neosport 3 mm two-piece", serial:"", bought:"", service:"", every:"", notes:"Long-sleeve shorty plus farmer john"},
-  {id:"g6", type:"Boots", name:"Fourth Element Pelagic 6.5 mm", serial:"", bought:"", service:"", every:"", notes:""},
-  {id:"g7", type:"Fins", name:"Scubapro Seawing Supernova", serial:"", bought:"", service:"", every:"", notes:"Open heel, positive buoyancy"}
-];
 const GEAR_TYPES = [["Regulator",12],["BCD",12],["Dive computer",0],["Tank",12],["Wetsuit",0],["Mask",0],["Fins",0],["Boots",0],["Light",0],["SMB and reel",0],["Other",0]];
 let GE = null, GPROMPT = null;
 const GUIDE_TOPICS = {"Regulator":["Setup","Before the dive","After the dive","Service"],"BCD":["Fit and weights","Before the dive","Care"],"Dive computer":["Settings","Before the dive","Battery and charging","Logs and updates"],"Tank":["Pressure and inspection dates","Care"],"Light":["Battery","Care"],"SMB and reel":["Deploying","Care"]};
