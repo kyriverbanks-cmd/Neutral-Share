@@ -423,22 +423,51 @@ const TRIP = [
     "Flying home: Quito sits at about 2,850 m. Count it as altitude when you plan your last dive day"
   ]]
 ];
-const DEFAULT_CONTACTS = [
-  {id:"k1", who:"Emergency (EMS, police, fire)", num:"911", sub:"Call first for any life-threatening emergency"},
-  {id:"k2", who:"DAN emergency hotline", num:"+1-919-684-9111", sub:"Diving medical emergencies, 24 h, worldwide. Based in Durham, NC"},
-  {id:"k3", who:"Duke Hyperbaric Center, Durham", num:"919-684-8111", sub:"24 h. Ask for the hyperbaric physician on call. Call 911 first if life-threatening"},
-  {id:"k4", who:"US Coast Guard, offshore", num:"", sub:"VHF channel 16 from the boat"},
-  {id:"k5", who:"Dive operator / boat", num:"", sub:"Add before each trip"}
+const TH_CONTACTS = [
+  {id:"k1", who:"Thailand ambulance (EMS)", num:"1669", sub:"National emergency medical line"},
+  {id:"k2", who:"DAN emergency, within Thailand", num:"1-800-01-8092", sub:"Diving medical emergencies, 24 h. Source: DAN contact page, Sept 2026"},
+  {id:"k3", who:"DAN global emergency", num:"+1-919-684-9111", sub:"Works from anywhere, 24 h. Calls from abroad may cost"},
+  {id:"k4", who:"Bangkok Hospital Pattaya, hyperbaric", num:"+66 38 259 986", sub:"Treats DCS and AGE. Closest to Rayong. Confirm hours before a trip"},
+  {id:"k5", who:"SSS chamber, Koh Tao", num:"+66 81 081 9777", sub:"24 h emergency"},
+  {id:"k6", who:"SSS chamber, Phuket", num:"+66 81 081 9000", sub:"24 h emergency"},
+  {id:"k7", who:"Dive operator / boat", num:"", sub:"Add before each trip"}
 ];
+const US_CONTACTS = [
+  {id:"u1", who:"Emergency (EMS, police, fire)", num:"911", sub:"Call first for any life-threatening emergency"},
+  {id:"u2", who:"DAN emergency hotline", num:"+1-919-684-9111", sub:"Diving medical emergencies, 24 h, worldwide. Based in Durham, NC"},
+  {id:"u3", who:"Duke Hyperbaric Center, Durham", num:"919-684-8111", sub:"24 h. Ask for the hyperbaric physician on call. Call 911 first if life-threatening"},
+  {id:"u4", who:"US Coast Guard, offshore", num:"", sub:"VHF channel 16 from the boat"},
+  {id:"u5", who:"Dive operator / boat", num:"", sub:"Add before each trip"}
+];
+const EC_CONTACTS = [
+  {id:"e1", who:"Ecuador emergency, ECU 911", num:"911", sub:"Police, fire, ambulance. Some operators speak English. The ECU 911 app can call you back with your GPS location"},
+  {id:"e2", who:"DAN emergency hotline", num:"+1-919-684-9111", sub:"24 h. Call early: DAN can coordinate evacuation from the islands"},
+  {id:"e3", who:"Protesub hyperbaric chamber, Puerto Ayora", num:"", sub:"Santa Cruz Island, 24 h. Get the current number from the liveaboard before the first dive"},
+  {id:"e4", who:"Ecuadorian Navy chamber, Guayaquil", num:"", sub:"San Eduardo Naval Base, mainland. Second option; ask DAN or the operator"},
+  {id:"e5", who:"Liveaboard / dive operator", num:"", sub:"Add the boat's satellite phone and the office number"}
+];
+const DEFAULT_CONTACTS = TH_CONTACTS;
 const PH_CONTACTS = [
-  {id:"p1", who:"Ecuador emergency, ECU 911", num:"911", sub:"Police, fire, ambulance. Some operators speak English. The ECU 911 app can call you back with your GPS location"},
-  {id:"p2", who:"DAN emergency hotline", num:"+1-919-684-9111", sub:"24 h. Call early: DAN can coordinate evacuation from the islands"},
-  {id:"p3", who:"Protesub hyperbaric chamber, Puerto Ayora", num:"", sub:"Santa Cruz Island, 24 h. Get the current number from the liveaboard before the first dive"},
-  {id:"p4", who:"Ecuadorian Navy chamber, Guayaquil", num:"", sub:"San Eduardo Naval Base, mainland. Second option; ask DAN or the operator"},
-  {id:"p5", who:"Liveaboard / dive operator", num:"", sub:"Add the boat's satellite phone and the office number"}
+  {id:"p1", who:"Philippines emergency (police, fire, ambulance)", num:"911", sub:"National hotline, from any phone"},
+  {id:"p2", who:"Philippine Coast Guard", num:"+63 2 8527 8482", sub:"Sea rescue and evacuation. Also +63 2 8527 3877. Text +63 917 724 3682"},
+  {id:"p3", who:"DAN global emergency", num:"+1-919-684-9111", sub:"24 h. DAN lists no Philippines line, so use this one. Collect calls accepted"},
+  {id:"p4", who:"Philippine Red Cross", num:"143", sub:"Ambulance and disaster response"},
+  {id:"p5", who:"Chamber, Manila: Lung Center (PCSSD)", num:"+63 915 827 0768", sub:"Quezon City. Landline +63 2 8924 6101, ask for local 1952"},
+  {id:"p6", who:"Chamber, Batangas: St. Patrick's Hospital", num:"+63 917 815 2010", sub:"Batangas City, nearest to Anilao. Landline +63 43 723 7089"},
+  {id:"p7", who:"Chamber, Cebu: TIEZA building (PCSSD)", num:"+63 928 242 6237", sub:"Mandaue City, serves the Visayas. Alternate listed +63 932 434 9532"},
+  {id:"p8", who:"Chamber, Coron: Sea Dive Resort", num:"+63 920 458 1360", sub:"Coron, Palawan"},
+  {id:"p9", who:"Liveaboard operator / boat", num:"", sub:"Add before the trip, with their emergency plan and nearest chamber"}
 ];
-function emRegion(){ return S.emergency.region==="ph"? "ph" : "th"; }
-function emList(){ if(!Array.isArray(S.emergency.ph)) S.emergency.ph = PH_CONTACTS.map(c=>({...c})); return emRegion()==="ph"? S.emergency.ph : S.emergency.contacts; }
+const DEFAULT_REGION = "us";
+const REGIONS = [
+  {k:"th", label:"Thailand", store:"contacts", seed:()=>TH_CONTACTS, note:""},
+  {k:"ph", label:"Philippines", store:"ph", seed:()=>PH_CONTACTS, note:"Chamber numbers come from Philippine dive community lists dated 2023 to 2024. Confirm the nearest working chamber with the liveaboard before departure."},
+  {k:"us", label:"USA", store:"us", seed:()=>US_CONTACTS, note:""},
+  {k:"ec", label:"Ecuador", store:"ec", seed:()=>EC_CONTACTS, note:"Galápagos medical care is limited and evacuation to the mainland is by air. Wolf and Darwin are an overnight sail from Santa Cruz, so help can be many hours away. Get the chamber and boat numbers at the first briefing. Galápagos checklist: Gear tab, Trip prep. Numbers checked November 2026."}
+];
+function emReg(){ return REGIONS.find(r=>r.k===S.emergency.region) || REGIONS.find(r=>r.k===DEFAULT_REGION); }
+function emRegion(){ return emReg().k; }
+function emList(){ const r = emReg(); if(!Array.isArray(S.emergency[r.store])) S.emergency[r.store] = r.seed().map(c=>({...c})); return S.emergency[r.store]; }
 function defaultCond(last){ return {current:null, vis:null, temp:null, entry: last&&last.cond? last.cond.entry : null, camera: last&&last.cond? last.cond.camera : null}; }
 const CUR_T = {none:"No current", light:"Light", mod:"Moderate", strong:"Strong"};
 const VIS_T = {lt5:"Under 5 m", "5to15":"5 to 15 m", "15to30":"15 to 30 m", gt30:"Over 30 m"};
@@ -502,6 +531,11 @@ function migrate(o){
   if(o.certs.certV===2 || o.certs.certV===3){ (o.certs.list||[]).forEach(x=>{ const sd = CERT_SEED.find(y=>y.id===x.id); if(sd){ if(!x.date) x.date = sd.date; if(!x.no) x.no = sd.no; if(!x.note && sd.note) x.note = sd.note; } }); o.certs.certV = 4; }
   if(o.certs.certV!==4){ o.certs.list = CERT_SEED.map(x=>Object.assign({},x)); o.certs.msd = Object.assign({},MSD_SEED); o.certs.certV = 4; }
   if(!o.medical) o.medical = {signed:"", physician:false, physDate:""};
+  if(o.emergency && !o.emergency.rv){
+    if(o.emergency.contacts && o.emergency.contacts.some(c=>/EMS, police, fire/.test(c.who||""))){ o.emergency.us = o.emergency.contacts; o.emergency.contacts = TH_CONTACTS.map(c=>({...c})); if(!o.emergency.region || o.emergency.region==="th") o.emergency.region = "us"; }
+    if(o.emergency.ph && o.emergency.ph.some(c=>/ECU 911/.test(c.who||""))){ o.emergency.ec = o.emergency.ph; delete o.emergency.ph; if(o.emergency.region==="ph") o.emergency.region = "ec"; }
+    o.emergency.rv = 2;
+  }
   if(!o.incident) o.incident = {active:null, past:[]};
   if(!Array.isArray(o.hiddenGuides)) o.hiddenGuides = [];
   if(!Array.isArray(o.myGuides)) o.myGuides = [];
@@ -1003,9 +1037,10 @@ function viewEmergency(){
   return `<div class="section spread"><h1 style="color:var(--bad)">Emergency</h1></div>
   <div class="section"><button type="button" class="btn" style="background:var(--bad);color:#fff;font-size:18px;padding:16px" data-act="wfStart">${WF? "Resume emergency workflow" : "Start emergency workflow"}</button>
     <p class="small muted" style="margin-top:6px">Step by step from scene safety to handover. Opens an accident record and logs each step with the time. A memory aid only: it does not replace training. Call local emergency services first.</p></div>
-  <div class="section"><div class="spread"><h3>Call</h3><div style="min-width:190px" class="seg" style="flex:none" role="group" aria-label="Country"><button type="button" class="${R==="th"?"on":""}" data-act="emRegion" data-v="th">USA</button><button type="button" class="${R==="ph"?"on":""}" data-act="emRegion" data-v="ph">Ecuador</button></div></div>
+  <div class="section"><h3>Call</h3>
+    <div class="seg" role="group" aria-label="Country" style="margin-bottom:10px">${REGIONS.map(r=>`<button type="button" class="${R===r.k?"on":""}" style="font-size:13px;padding-left:2px;padding-right:2px" data-act="emRegion" data-v="${r.k}">${r.label}</button>`).join("")}</div>
     <div class="panel">${contacts}</div>
-    ${R==="ph"? `<p class="small muted">Galápagos medical care is limited and evacuation to the mainland is by air. Wolf and Darwin are an overnight sail from Santa Cruz, so help can be many hours away. Get the chamber and boat numbers at the first briefing. Galápagos checklist: Gear tab, Trip prep. Numbers checked November 2026.</p>` : ""}
+    ${emReg().note? `<p class="small muted">${emReg().note}</p>` : ""}
     <div class="row">${EM.edit? `<button type="button" class="btn slim" data-act="ctSave">Save contacts</button><button type="button" class="btn slim ghost" data-act="ctAdd">Add contact</button>` : `<button type="button" class="btn slim ghost" data-act="ctEdit">Edit contacts</button>`}</div>
     <p class="small muted">Tap a number to call. Check the numbers before each trip.</p></div>
   <div class="section"><div class="spread"><h3>My details</h3><button type="button" class="btn slim ghost" data-act="meEdit">${EM.meEdit?"Done":"Edit"}</button></div>
@@ -2084,7 +2119,7 @@ function viewTrip(){
       const k = grp+"|"+i;
       return `<label class="cue"><input type="checkbox" data-trip="${esc(k)}" ${S.trip.items[k]?"checked":""}><span>${esc(t)}</span></label>`;
     }).join("")}</div></div>`).join("")}
-  <div class="section"><p class="small muted">The SOS page has emergency numbers for the USA and Ecuador (Galápagos): pick one at the top of the Call list. For any other country, add its numbers there before your first dive.</p>
+  <div class="section"><p class="small muted">The SOS page has emergency numbers for Thailand, the Philippines, the USA and Ecuador (Galápagos): pick one at the top of the Call list. For any other country, add its numbers there before your first dive.</p>
   <button type="button" class="btn ghost" data-act="sos">Open SOS contacts</button></div>`;
 }
 const GEAR_TYPES = [["Regulator",12],["BCD",12],["Dive computer",0],["Tank",12],["Wetsuit",0],["Mask",0],["Fins",0],["Boots",0],["Light",0],["SMB and reel",0],["Other",0]];
@@ -2653,8 +2688,8 @@ document.addEventListener("click", async e=>{
     case "meSave": { document.querySelectorAll("[data-me]").forEach(el=>{ S.emergency.me[el.dataset.me] = el.value.trim(); }); EM.meEdit = false; save(); render(); toast("Saved on this phone"); break; }
     case "ctEdit": EM.edit = !EM.edit; render(); break;
     case "ctAdd": emList().push({id:"k"+uid(), who:"New contact", num:"", sub:""}); EM.edit = true; save(); render(); break;
-    case "ctDel": { const k = emRegion()==="ph"? "ph" : "contacts"; S.emergency[k] = emList().filter(c=>c.id!==v); save(); render(); break; }
-    case "emRegion": S.emergency.region = v==="ph"? "ph" : "th"; EM.edit = false; save(); render(); break;
+    case "ctDel": { const k = emReg().store; S.emergency[k] = emList().filter(c=>c.id!==v); save(); render(); break; }
+    case "emRegion": S.emergency.region = REGIONS.some(r=>r.k===v)? v : DEFAULT_REGION; EM.edit = false; save(); render(); break;
     case "backupNow": tab = "me"; render(); setTimeout(()=>{ const el = $("#backupPanel"); el && el.scrollIntoView({block:"start"}); }, 30); break;
     case "copyBackup": {
       try{ await navigator.clipboard.writeText(JSON.stringify(S)); markBackup(); toast("Backup copied. Paste it into Notes"); }
